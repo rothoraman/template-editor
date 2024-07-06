@@ -11,27 +11,26 @@
 .image-wrapper {
   position: relative;
   margin: 10px;
-  overflow: hidden; /* Ensures child elements respect boundaries */
+  overflow: hidden; 
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Adding transition for transform and box-shadow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
 }
 
 .image-wrapper:hover {
-  transform: scale(1.05); /* Scale up effect on hover */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+  transform: scale(1.05); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
 }
 
 .gallery-image {
   width: 200px;
   height: 200px;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out; /* Adding transition for transform */
+  transition: transform 0.3s ease-in-out;
 }
 
 .gallery-image:hover {
-  transform: scale(1.1); /* Scale up effect on hover */
-}
+  transform: scale(1.1);
 
 .modify-link {
   position: absolute;
@@ -44,9 +43,8 @@
   text-decoration: none;
   color: #333;
   font-size: 14px;
-  transition: background-color 0.3s ease-in-out; /* Adding transition for background-color */
+  transition: background-color 0.3s ease-in-out; 
 }
 
 .modify-link:hover {
-  background-color: rgba(255, 255, 255, 1); /* Darken background on hover */
-}
+  background-color: rgba(255, 255, 255, 1);
