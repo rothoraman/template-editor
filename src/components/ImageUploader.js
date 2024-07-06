@@ -1,0 +1,142 @@
+import React, { useState, useRef, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import Draggable from "react-draggable";
+import "./ImageUploader.css";
+
+import image1 from "../assets/image1.jpg";
+import image2 from "../assets/image2.jpg";
+import image3 from "../assets/image3.jpg";
+import image4 from "../assets/image4.jpg";
+
+const images = {
+  1: image1,
+  2: image2,
+  3: image3,
+  4: image4,
+};
+
+const ImageUploader = () => {
+  const { imageType } = useParams();
+  const navigate = useNavigate();
+  const [uploadedImages, setUploadedImages] = useState([]);
+  const baseImageRef = useRef(null);
+
+  const onDrop = (acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUploadedImages((prevImages) => [
+          ...prevImages,
+          {
+            src: reader.result,
+            x: baseImageRef.current.width / 2 - 50, // Initial x position
+            y: baseImageRef.current.height / 2 - 50, // Initial y position
+          },
+        ]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleDrag = (index, e, data) => {
+    setUploadedImages((prevImages) => {
+      const newImages = [...prevImages];
+      newImages[index] = { ...newImages[index], x: data.x, y: data.y };
+      return newImages;
+    });
+  };
+
+  const handleDownload = () => {
+    // Create a temporary canvas to draw all images
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const baseImage = baseImageRef.current;
+    canvas.width = baseImage.width;
+    canvas.height = baseImage.height;
+
+    // Draw base image on canvas
+    ctx.drawImage(baseImage, 0, 0);
+
+    // Use Promise.all to handle multiple image loading asynchronously
+    Promise.all(
+      uploadedImages.map(({ src, x, y }) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = "anonymous"; // Ensure CORS compatibility
+          img.src = src;
+          img.onload = () => {
+            ctx.drawImage(img, x, y);
+            resolve(); // Resolve the promise once image is drawn
+          };
+          img.onerror = (error) => reject(error); // Handle any errors loading the image
+        });
+      })
+    )
+      .then(() => {
+        // Once all images are drawn, create a download link for the canvas
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = `image-${imageType}.png`;
+        link.click();
+      })
+      .catch((error) => {
+        console.error("Error loading images:", error);
+      });
+  };
+
+  useEffect(() => {
+    // Ensure all uploaded images are loaded before rendering
+    const handleImageLoad = () => {
+      setUploadedImages((prevImages) => [...prevImages]);
+    };
+
+    uploadedImages.forEach(({ src }) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = handleImageLoad;
+    });
+  }, [uploadedImages]);
+
+  return (
+    <div className="upload-page">
+      <h1>Upload Images for Image {imageType}</h1>
+      <Dropzone onDrop={onDrop} multiple>
+        {({ getRootProps, getInputProps }) => (
+          <div {...getRootProps({ className: "dropzone" })}>
+            <input {...getInputProps()} />
+            <p>Drag 'n' drop some files here, or click to select files</p>
+          </div>
+        )}
+      </Dropzone>
+      <div className="image-container">
+        <img
+          ref={baseImageRef}
+          src={images[imageType]}
+          alt={`Image ${imageType}`}
+          className="base-image"
+        />
+        {uploadedImages.map((image, index) => (
+          <Draggable
+            key={index}
+            position={{ x: image.x, y: image.y }}
+            onStop={(e, data) => handleDrag(index, e, data)}
+          >
+            <img
+              src={image.src}
+              alt={`Uploaded ${index}`}
+              className="uploaded-image"
+              style={{ position: "absolute", zIndex: index + 1 }}
+            />
+          </Draggable>
+        ))}
+      </div>
+      <div className="buttons">
+        <button onClick={() => navigate("/")}>Back</button>
+        <button onClick={handleDownload}>Download</button>
+      </div>
+    </div>
+  );
+};
+
+export default ImageUploader;

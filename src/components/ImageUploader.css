@@ -1,0 +1,38 @@
+.upload-page {
+  text-align: center;
+}
+
+.dropzone {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  margin: 20px auto;
+  width: 50%;
+  cursor: pointer;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.base-image {
+  width: 500px;
+  height: auto;
+}
+
+.uploaded-image {
+  width: 100px;
+  height: 100px;
+  cursor: move;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.buttons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
