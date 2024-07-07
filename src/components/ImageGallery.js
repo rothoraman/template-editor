@@ -1,36 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./ImageGallery.css";
 
-import image1 from "../assets/image1.jpg";
-import image2 from "../assets/image2.jpg";
-import image3 from "../assets/image3.jpg";
-import image4 from "../assets/image4.jpg";
+const ImageGallery = ({ albums }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // Display 9 items per page
 
-const images = [
-  { id: 1, src: image1, alt: "Image 1" },
-  { id: 2, src: image2, alt: "Image 2" },
-  { id: 3, src: image3, alt: "Image 3" },
-  { id: 4, src: image4, alt: "Image 4" },
-];
+  // Calculate pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentAlbums = albums.slice(indexOfFirstItem, indexOfLastItem);
 
-const ImageGallery = () => {
+  // Handle pagination click
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
-    <>
+    <div className="image-gallery">
       <h1 className="gallery-heading">Click on any template to modify</h1>
-      <div className="image-gallery">
-        {images.map((image) => (
-          <div key={image.id} className="image-wrapper">
-            <Link to={`/upload/${image.id}`}>
-              <img src={image.src} alt={image.alt} className="gallery-image" />
+      <div className="images">
+        {currentAlbums.map((album) => (
+          <div key={album.id} className="image-wrapper">
+            <Link to={`/upload/${album.id}`}>
+              <img
+                src={album.thumbnailUrl}
+                alt={album.title}
+                className="gallery-image"
+              />
             </Link>
-            <Link to={`/upload/${image.id}`} className="modify-link">
-              Modify
-            </Link>
+            <div className="image-info">
+              <p>ID: {album.id}</p>
+              <p>Title: {album.title}</p>
+            </div>
           </div>
         ))}
       </div>
-    </>
+      <div className="pagination">
+        {Array.from(
+          { length: Math.ceil(albums.length / itemsPerPage) },
+          (_, index) => (
+            <button key={index + 1} onClick={() => paginate(index + 1)}>
+              {index + 1}
+            </button>
+          )
+        )}
+      </div>
+    </div>
   );
 };
 
