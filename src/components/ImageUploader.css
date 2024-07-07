@@ -1,38 +1,54 @@
 .upload-page {
-  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .dropzone {
   border: 2px dashed #ccc;
   padding: 20px;
-  margin: 20px auto;
-  width: 50%;
+  text-align: center;
   cursor: pointer;
 }
 
 .image-container {
   position: relative;
-  display: inline-block;
   margin-top: 20px;
+  border: 2px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .base-image {
-  width: 500px;
+  width: 100%;
   height: auto;
+  display: block;
+  border-radius: 8px;
 }
 
 .uploaded-image {
-  width: 100px;
-  height: 100px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  position: absolute;
   cursor: move;
 }
 
 .buttons {
   margin-top: 20px;
+  text-align: center;
 }
 
 .buttons button {
-  margin: 0 10px;
-  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
   cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.buttons button:hover {
+  background-color: #0056b3;
 }

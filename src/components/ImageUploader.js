@@ -4,18 +4,6 @@ import Dropzone from "react-dropzone";
 import Draggable from "react-draggable";
 import "./ImageUploader.css";
 
-import image1 from "../assets/image1.jpg";
-import image2 from "../assets/image2.jpg";
-import image3 from "../assets/image3.jpg";
-import image4 from "../assets/image4.jpg";
-
-const images = {
-  1: image1,
-  2: image2,
-  3: image3,
-  4: image4,
-};
-
 const ImageUploader = () => {
   const { imageType } = useParams();
   const navigate = useNavigate();
@@ -32,6 +20,8 @@ const ImageUploader = () => {
             src: reader.result,
             x: baseImageRef.current.width / 2 - 50, // Initial x position
             y: baseImageRef.current.height / 2 - 50, // Initial y position
+            title: `Image ${imageType}`, // Example title based on imageType
+            id: imageType, // Example ID based on imageType
           },
         ]);
       };
@@ -112,7 +102,7 @@ const ImageUploader = () => {
       <div className="image-container">
         <img
           ref={baseImageRef}
-          src={images[imageType]}
+          src={`https://jsonplaceholder.typicode.com/photos/${imageType}`} // Example URL based on imageType
           alt={`Image ${imageType}`}
           className="base-image"
         />

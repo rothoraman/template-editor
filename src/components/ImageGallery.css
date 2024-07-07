@@ -1,40 +1,36 @@
-.gallery-heading {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
 .image-gallery {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
+}
+
+.gallery-heading {
+  text-align: center;
 }
 
 .images {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .image-wrapper {
-  margin: 10px;
-  text-align: center;
+  position: relative;
 }
 
 .gallery-image {
-  width: 200px;
+  width: 100%;
   height: auto;
+  display: block;
+  border-radius: 8px;
   cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 .image-info {
-  margin-top: 10px;
-  text-align: center;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
 }
 
 .pagination {
@@ -44,14 +40,15 @@
 }
 
 .pagination button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
   margin: 0 5px;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f0f0f0;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .pagination button:hover {
-  background-color: #e0e0e0;
+  background-color: #0056b3;
 }

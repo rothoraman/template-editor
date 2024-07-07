@@ -1,17 +1,18 @@
 import React from "react";
-import "./Sidebar.css";
 
-const Sidebar = ({ albums, paginate }) => {
-  // Filter albums with title length of 10 characters
-  const filteredAlbums = albums.filter((album) => album.title.length === 10);
+const Sidebar = ({ albums }) => {
+  const handleRangeClick = (startId, endId) => {
+    // Handle logic for clicking range of IDs
+  };
 
   return (
-    <aside className="sidebar">
-      {filteredAlbums.map((album) => (
-        <button key={album.id} onClick={() => paginate(album.id)}>
-          {album.title}
-        </button>
-      ))}
+    <aside>
+      <h2>Image IDs Range</h2>
+      <button onClick={() => handleRangeClick(1, 10)}>IDs 1-10</button>
+      <button onClick={() => handleRangeClick(11, 20)}>IDs 11-20</button>
+      <button onClick={() => handleRangeClick(21, 30)}>IDs 21-30</button>
+      <button onClick={() => handleRangeClick(31, 40)}>IDs 31-40</button>
+      <button onClick={() => handleRangeClick(41, 50)}>IDs 41-50</button>
     </aside>
   );
 };
