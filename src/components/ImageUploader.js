@@ -10,6 +10,7 @@ const ImageUploader = () => {
   const [uploadedImages, setUploadedImages] = useState([]);
   const baseImageRef = useRef(null);
 
+  // Function to handle file drop
   const onDrop = (acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
@@ -29,6 +30,7 @@ const ImageUploader = () => {
     });
   };
 
+  // Function to handle dragging of uploaded images
   const handleDrag = (index, e, data) => {
     setUploadedImages((prevImages) => {
       const newImages = [...prevImages];
@@ -37,6 +39,7 @@ const ImageUploader = () => {
     });
   };
 
+  // Function to handle image download
   const handleDownload = () => {
     // Create a temporary canvas to draw all images
     const canvas = document.createElement("canvas");
@@ -75,8 +78,8 @@ const ImageUploader = () => {
       });
   };
 
+  // Effect to ensure all uploaded images are loaded before rendering
   useEffect(() => {
-    // Ensure all uploaded images are loaded before rendering
     const handleImageLoad = () => {
       setUploadedImages((prevImages) => [...prevImages]);
     };
@@ -112,12 +115,13 @@ const ImageUploader = () => {
             position={{ x: image.x, y: image.y }}
             onStop={(e, data) => handleDrag(index, e, data)}
           >
-            <img
-              src={image.src}
-              alt={`Uploaded ${index}`}
-              className="uploaded-image"
-              style={{ position: "absolute", zIndex: index + 1 }}
-            />
+            <div className="uploaded-image">
+              <img src={image.src} alt={`Uploaded ${index}`} />
+              <div className="image-details">
+                <p>ID: {image.id}</p>
+                <p>Title: {image.title}</p>
+              </div>
+            </div>
           </Draggable>
         ))}
       </div>

@@ -31,9 +31,18 @@ const App = () => {
       <div className="App">
         <Header />
         <div className="content">
-          <Sidebar albums={albums} />
+          {/* <Sidebar albums={albums} /> */}
           <Routes>
-            <Route exact path="/" element={<ImageGallery albums={albums} />} />
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <Sidebar albums={albums} />
+                  <ImageGallery albums={albums} />
+                </>
+              }
+            />
             <Route path="/upload/:imageType" element={<ImageUploader />} />
           </Routes>
         </div>

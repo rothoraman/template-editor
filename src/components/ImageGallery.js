@@ -16,7 +16,6 @@ const ImageGallery = ({ albums }) => {
 
   return (
     <div className="image-gallery">
-      <h1 className="gallery-heading">Click on any template to modify</h1>
       <div className="images">
         {currentAlbums.map((album) => (
           <div key={album.id} className="image-wrapper">
